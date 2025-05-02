@@ -12,7 +12,7 @@ export class ApiResponse {
 
     }
 
-   static success (message:string,status:any,data?:string){
+   static success (message:string,status:any,data?:any){
         return new ApiResponse(message,status,data)
     }
 

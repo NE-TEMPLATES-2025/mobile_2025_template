@@ -1,2 +1,6 @@
 export * from "./login.dto"
 export * from "./register.dto"
+export * from "./reset-password.dto"
+export * from "./initiate-account-verification.dto"
+export * from "./verify-account.dto"
+export * from "./initiate-reset-password.dto"

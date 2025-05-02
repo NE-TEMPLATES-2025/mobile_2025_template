@@ -147,7 +147,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -157,17 +157,16 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://pacifique:myPassword123@localhost:5432/mobile_tpt_db?schema=public"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  ADMIN\n  USER\n}\n\nmodel User {\n  id        String @id @default(uuid())\n  firstName String @map(\"first_name\")\n  lastName  String @map(\"last_name\")\n  email     String @unique @map(\"email\")\n  password  String @map(\"password\")\n\n  role Role @map(\"role\")\n\n  @@map(\"users\")\n}\n",
-  "inlineSchemaHash": "d8d9cfb66d086e4acec4d313c9e5036f6485c41cbce914edca6adb2a2f2a6380",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  ADMIN\n  USER\n}\n\nmodel User {\n  id        String @id @default(uuid())\n  firstName String @map(\"first_name\")\n  lastName  String @map(\"last_name\")\n  email     String @unique @map(\"email\")\n  password  String @map(\"password\")\n\n  role Role @map(\"role\")\n\n  @@map(\"users\")\n}\n",
+  "inlineSchemaHash": "0c91f5e306450850377bde607886cee46f9810cece120480f1ba177f24717542",
   "copyEngine": true
 }
 config.dirname = '/'
