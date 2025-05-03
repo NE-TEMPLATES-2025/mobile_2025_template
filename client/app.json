@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/splash.png",
-    "splash":{
+    "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#0961F5"
@@ -35,7 +35,8 @@
           "imageWidth": 200,
           "resizeMode": "contain"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

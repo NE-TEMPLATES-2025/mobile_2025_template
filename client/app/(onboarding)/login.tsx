@@ -6,8 +6,12 @@ import { AppleSvg, ChevronLeftBlue, EyeOpen, EyeSvg, GoogleSvg, MailGray } from 
 import { Lock } from '@/assets/svgs'
 import Checkbox from 'expo-checkbox';
 import { Link, router } from 'expo-router'
+import { useDispatch } from 'react-redux'
+import { loginSuccess } from '@/redux/userSlice'
+
 import CustomButton from '@/components/CustomButton'
 import authApi from '../api/auth'
+import storage from './storage'
 
 const Login = () => {
   const [loginFailed,setLoginFailed]= useState(false);
@@ -15,6 +19,8 @@ const Login = () => {
     email:"",
     password:""
   })
+
+  const dispatch= useDispatch();
 
 
   const handleLogin= async()=>{
@@ -24,12 +30,24 @@ const Login = () => {
     }
     
 
+    
     const response= await  authApi.login(formData.email,formData.password);
     if(response?.statusText !== "success") setLoginFailed(true);
+    
 
     setLoginFailed(false);
+    console.log(response.data);
+    
+    const token = response.data.data.token;
+    const user = response.data.data.user;
 
-    router.replace("/(root)/(tabs)/home")
+      await storage.storeToken(token);
+      const decodedUser= await storage.getUser();
+      console.log(user);
+      
+      dispatch(loginSuccess({token,user:decodedUser}))
+      router.replace("/(root)/(tabs)/home")
+    
     
   }
   const [isSelected, setIsSelected] =useState(false)
