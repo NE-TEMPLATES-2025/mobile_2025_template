@@ -11,6 +11,8 @@ const CustomInput = ({
     iconRight,
     placeholder,
     secureTextEntry= false,
+    onChangeText
+
     
 }: CustomInputProps) => {
     const [isPasswordVisible, setIsPasswordVisible]= useState(!secureTextEntry);
@@ -32,6 +34,7 @@ const CustomInput = ({
                 placeholder={placeholder}
                 secureTextEntry={!isPasswordVisible}
                 className='bg-transparent focus:bg-transparent px-3 py-2 w-full h-full text-gray-2 font-semibold'
+                onChangeText={onChangeText}
 
                 />
 

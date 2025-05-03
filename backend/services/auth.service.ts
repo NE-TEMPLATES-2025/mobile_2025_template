@@ -41,7 +41,7 @@ export const signup =async(registerDto:RegisterDto)=>{
             }
         })
 
-        if(existingUser) throw new Error("Email already in use!");
+        // if(existingUser) throw new Error("Email already in use!");
         
         const salt= await bcrypt.genSalt(10);
         const hash=await bcrypt.hash(registerDto.password,salt);

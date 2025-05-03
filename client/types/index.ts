@@ -22,7 +22,8 @@ export interface CustomInputProps extends TextInputProps {
     placeholder?: string;
     placeholderStyle?: string;
     containerStyle?: string;
-    secureTextEntry?: boolean
+    secureTextEntry?: boolean;
+    onChangeText: (text:string)=>void
 }
 
 export  interface OTPInputProps {

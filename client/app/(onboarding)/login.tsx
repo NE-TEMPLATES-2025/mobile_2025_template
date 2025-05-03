@@ -7,10 +7,31 @@ import { Lock } from '@/assets/svgs'
 import Checkbox from 'expo-checkbox';
 import { Link, router } from 'expo-router'
 import CustomButton from '@/components/CustomButton'
-
+import authApi from '../api/auth'
 
 const Login = () => {
+  const [loginFailed,setLoginFailed]= useState(false);
+  const  [formData,setFormData]=useState({
+    email:"",
+    password:""
+  })
 
+
+  const handleLogin= async()=>{
+    if(!formData.email || !formData.password) {
+      alert("All fields are required")
+      return;
+    }
+    
+
+    const response= await  authApi.login(formData.email,formData.password);
+    if(response?.statusText !== "success") setLoginFailed(true);
+
+    setLoginFailed(false);
+
+    router.replace("/(root)/(tabs)/home")
+    
+  }
   const [isSelected, setIsSelected] =useState(false)
   return (
     <SafeAreaView className=' flex-1 bg-secondary'>
@@ -32,12 +53,14 @@ const Login = () => {
        <Text className=' text-gray-1 text-[14px] font-semibold mt-3 mb-12'>Login to Your Account to Continue your Courses</Text>
        
        <CustomInput
+         onChangeText={(text)=>setFormData({...formData,email:text})}
          iconLeft={<MailGray/>}
          placeholder='Email '
          placeholderStyle='text-gray-2 font-semibold'
          
        />
        <CustomInput
+       onChangeText={(text)=>setFormData({...formData,password:text})}
          iconLeft={<Lock/>}
          placeholder='Password '
          placeholderStyle='text-gray-2 font-semibold'
@@ -55,7 +78,7 @@ const Login = () => {
         />
         <Text className='text-gray-1 font-semibold text-[14px]'>Remember Me</Text>
         </View>
-        <Link href="/(auth)/(auth-recovery)/forgot-password" className='text-gray-1 text-[14px] font-semibold'>Forgot Password?</Link>
+        <Link href="/(onboarding)/login" className='text-gray-1 text-[14px] font-semibold'>Forgot Password?</Link>
        </View>
 
 
@@ -64,7 +87,7 @@ const Login = () => {
        title='Sign In'
        containerStyle='w-full h-[60px] mb-6 justify-center bg-primary'
        iconRight={<ChevronLeftBlue/>}
-       onPress={()=> router.push("/(root)/(tabs)/home")}
+       onPress={handleLogin}
        />
 
        <Text className='text-gray-1 text-[14px] font-semibold mb-6 text-center'>Or Continue With</Text>
@@ -85,11 +108,7 @@ const Login = () => {
           {" "} 
           <Link className='underline text-primary font-bold text-center' href="/(onboarding)/register">SIGN UP</Link>
           </Text>
-
-
       </View>
-
-
     </ScrollView>
     </SafeAreaView>
   )
