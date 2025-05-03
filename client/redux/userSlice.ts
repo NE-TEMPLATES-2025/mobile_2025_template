@@ -43,9 +43,16 @@ const userSlice= createSlice({
 
   },
   extraReducers: (builder)=>{
+    builder.addCase(loadUserFromStorage.pending,(state,action)=>{
+        state.isLoading=true;
+    })
     builder.addCase(loadUserFromStorage.fulfilled, (state,action)=>{
         state.token= action.payload.token;
         state.user= action.payload.user;
+        state.isLoading=false;
+    })
+    builder.addCase(loadUserFromStorage.rejected,(state)=>{
+        state.isLoading=false
     })
   }
 })

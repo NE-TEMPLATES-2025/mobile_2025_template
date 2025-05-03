@@ -12,7 +12,6 @@ const storeToken= async(value:string)=>{
         }
         
         await SecureStore.setItemAsync(key,value);
-
     } catch (error) {
         console.log("Error while storing token in the store",error)
     }
