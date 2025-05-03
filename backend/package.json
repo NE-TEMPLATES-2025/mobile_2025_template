@@ -22,6 +22,7 @@
   "dependencies": {
     "@prisma/client": "^6.7.0",
     "@types/node": "^22.15.3",
+    "@types/nodemailer": "^6.4.17",
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "class-validator": "^0.14.1",
@@ -30,6 +31,7 @@
     "express": "^5.1.0",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.10.1",
     "ts-node": "^10.9.2"
   }
 }
