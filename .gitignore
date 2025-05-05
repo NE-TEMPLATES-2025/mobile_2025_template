@@ -38,3 +38,4 @@ yarn-error.*
 app-example
 
 backend/.env*
+client/node_modules

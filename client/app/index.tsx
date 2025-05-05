@@ -32,6 +32,5 @@ export default function HomeScreen() {
 
   if(!user) return <Redirect href="/(onboarding)/onboarding-screens"/>
 
-
   return   <Redirect href="/(root)/(tabs)/home"/>
 }
