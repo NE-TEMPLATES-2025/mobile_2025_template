@@ -9,13 +9,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 enum Role {
   ADMIN
-  USER
+  ATTENDANT
 }
 
 
-model User{
+
+model User {
   id String  @default(uuid()) @id
   firstName String @map("first_name")
   lastName String @map("last_name")
@@ -23,8 +25,59 @@ model User{
   password String @map("password")
 
   role Role @map("role")
+  parking Parking[]
 
 
 @@map("users")
  
+}
+
+
+
+
+model Parking {
+  code String @id @unique
+  parkingName String @map("parking_name")
+  availableSpaces Int @map("available_spaces")
+  location String @map("location")
+  chargingFeePerHour Float @map("charging_fee_per_hour")
+
+  userId String
+  user User @relation(fields: [userId],references: [id])
+
+  carMovement CarMovement[]
+}
+
+model CarMovement {
+  id String @id @default(uuid())
+  plateNumber String
+   parkingCode String
+  parking Parking @relation(fields: [parkingCode],references: [code])
+  entryDateTime DateTime @map("entry_date_time")
+  exitDateTime DateTime? @map("exit_date_time") @default(dbgenerated("NULL"))
+   chargedAmount Int @map("charged_amount") @default(0)
+
+   @@map("car_movements")
+}
+
+model Ticket {
+  id Int @id @default(autoincrement())
+   plateNumber String
+   parkingCode String
+  entryDateTime DateTime @map("entry_date_time")
+  
+
+@@map("tickets")
+}
+
+model Bill {
+
+ id Int @id @default(autoincrement())
+   plateNumber String
+   parkingCode String
+  entryDateTime DateTime @map("entry_date_time")
+  exitDateTime DateTime? @map("exit_date_time")
+  chargedAmount Int  @map("charged_amount")
+
+@@map("bills")
 }

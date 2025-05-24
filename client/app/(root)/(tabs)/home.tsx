@@ -7,15 +7,23 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Bookmark, NotificationSvg, SearchDark, ThreeAllows } from "@/assets/svgs";
 import SearchInput from "@/components/SearchInput";
 import { Link, router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import { data } from "@/constants";
+import { useAppSelector } from "@/redux/store";
+import { logout } from "@/redux/userSlice";
+import { useDispatch } from "react-redux";
+import { getAllParkings } from "@/app/api/parking";
+import { Parking } from "@/types";
 
 const Home = () => {
+
+  const [parkings,setParkings]= useState<Parking[]>([]);
+  const dispatch=useDispatch()
   const [isCategorySelected, setIsCategorySelected] = useState(
     data.categories[1].title
   );
@@ -27,6 +35,13 @@ const Home = () => {
   const handleSelectFilter = (title: string) => {
     setSelectedFilter(title);
   };
+  const {user}= useAppSelector((state)=>state.user)
+
+  const handleLogout= ()=>{
+   dispatch(logout())
+   router.replace("/(onboarding)/login")
+  }
+  
 
 
   const courseFilters = ["All", ...data.categories.map((c) => c.title)];
@@ -35,6 +50,20 @@ const Home = () => {
     selectedFilter === "All"
       ? data.courses
       : data.courses.filter((c) => c.category === selectedFilter);
+
+    const handleGetParkings = async ()=>{
+
+     const parkings=  await getAllParkings()
+
+     setParkings(parkings);
+    }
+
+    useEffect(()=>{
+      handleGetParkings()
+    },[])
+
+    console.log(parkings)
+
 
   return (
     <SafeAreaView className="bg-secondary flex-1">
@@ -47,11 +76,11 @@ const Home = () => {
           <View className="w-full flex flex-row items-center justify-between mb-10">
             <View className=" flex flex-col gap-2">
               <Text className="text-dark text-2xl font-semibold">
-                Hi, Ronald A. Martin
+                Hi, {user!.firstName}
               </Text>
               <View className="flex flex-col gap-0">
                 <Text className="font-semibold text-[13px] text-gray-5">
-                  What Would you like to learn Today?
+                  Where do you want to park Today?
                 </Text>
                 <Text className="font-semibold text-[13px] text-gray-5">
                   Search Below.
@@ -59,15 +88,16 @@ const Home = () => {
               </View>
             </View>
 
-            <View className=" h-[40px] w-[40px] items-center justify-center rounded-full border-[2px] border-success p-3">
+            <TouchableOpacity onPress={handleLogout} className=" h-[40px] w-[40px] items-center justify-center rounded-full border-[2px] border-success p-3">
               <NotificationSvg />
-            </View>
+            </TouchableOpacity>
           </View>
           <SearchInput
             iconLeft={<SearchDark />}
             iconRight={<ThreeAllows />}
             placeholder="Search for.."
             containerStyle="mb-10"
+            onChangeText={()=>{}}
           />
           <View className="w-full min-h-[180px] overflow-hidden relative mb-6">
             <Image
@@ -85,68 +115,15 @@ const Home = () => {
               </View>
               <View className="justify-start mt-4 w-[60%]">
                 <Text className="text-white text-[14px] font-semibold">
-                  Get a Discount for Every Course Order only Valid for Today.!
+                  Get a Discount for Parking  only Valid for Today.!
                 </Text>
               </View>
             </View>
           </View>
 
-          <View className=" w-full flex flex-row justify-between items-center mb-4">
-            <Text className="font-semibold text-dark text-lg">Categories</Text>
-            <Link
-              href="/(root)/(tabs)/(courses)/categories"
-              className="flex flex-row gap-2 items-center "
-            >
-              <Text className="text-primary text-[12px] uppercase font-semibold">
-                SEE ALL
-              </Text>
-              <Feather
-                className=" self-center"
-                name="chevron-right"
-                size={16}
-                color="#0961F5"
-              />
-            </Link>
-          </View>
 
-          <View className=" w-full flex flex-row justify-between items-center mb-10">
-            {data.categories.map((category) => (
-              <TouchableWithoutFeedback
-                key={category.id}
-                onPress={() => handleSelectCategory(category.title)}
-              >
-                <Text
-                  className={` font-bold text[15px]  ${
-                    isCategorySelected == category.title
-                      ? "text-primary"
-                      : "text-gray-6"
-                  }`}
-                >
-                  {category.title}
-                </Text>
-              </TouchableWithoutFeedback>
-            ))}
-          </View>
-
-          <View className=" w-full flex flex-row justify-between items-center mb-4">
-            <Text className="font-semibold text-dark text-lg">
-              Popular Courses
-            </Text>
-            <Link
-              href="/(root)/(tabs)/(courses)/popular-courses"
-              className="flex flex-row gap-2 items-center "
-            >
-              <Text className="text-primary text-[12px] uppercase font-semibold">
-                SEE ALL
-              </Text>
-              <Feather
-                className=" self-center"
-                name="chevron-right"
-                size={16}
-                color="#0961F5"
-              />
-            </Link>
-          </View>
+<Text className="text-xl font-bold mb-3">Parkings For You</Text>
+        
 
           <ScrollView
            horizontal={true}
@@ -170,21 +147,10 @@ const Home = () => {
 
           <FlatList
           className={`mb-6`}
-            data={filteredCourses}
-            keyExtractor={(item)=>item.id.toString()}
+            data={parkings}
+            keyExtractor={(item)=>item.code.toString()}
             renderItem={({item})=>(
-              <TouchableOpacity onPress={()=>{
-                router.push({
-                  pathname: "/courses" + item.id.toString(),
-                  params:{
-                    id: item.id.toString(),
-                    title: item.title,
-                    price: item.price,
-                    students: item.students,
-                    rating: item.rating,
-                  }
-                })
-              }}>
+              <TouchableOpacity>
               <View className="min-w-[280px] min-h-[240px] bg-white rounded-[20px] mr-4 overflow-hidden shadow-secondary shadow-sm">
                 <Image
                   source={require("@/assets/images/course-placeholder.png")}
@@ -192,16 +158,15 @@ const Home = () => {
                 />
                 <View className=" w-full px-3 py-2">
                   <View className=" flex flex-row justify-between items-center mb-3">
-                    <Text className="text-orange-1 font-semibold">{item.category}</Text>
+                    <Text className="text-orange-1 font-semibold">{item.parkingName}</Text>
                     <Bookmark/>
                   </View>
-                  <Text className="text-dark font-semibold text-[16px] mb-2">{item.title}</Text>
+                  <Text className="text-dark font-semibold text-[16px] mb-2">{item.code}</Text>
                   <View className="flex flex-row gap-3 items-center ">
-                    <Text className="font-bold text-[15px] text-primary">${item.price}</Text>
+                    <Text className="font-bold text-[15px] text-primary">${item.chargingFeePerHour}</Text>
                     <View className="h-[16px] w-[2px] bg-black"/>
-                    <Text>⭐{item.rating}</Text>
                     <View className="h-[16px] w-[2px] bg-black"/>
-                    <Text className="text-[12px] font-bold text-dark">{item.students} Std</Text>
+                    <Text className="text-[12px] font-bold text-dark">{item.availableSpaces} Spaces available</Text>
                   </View>
 
                 </View>
@@ -218,37 +183,6 @@ const Home = () => {
         alignItems: filteredCourses.length === 1 ? "center" : "flex-start",
             }}
           />
-
-<View className=" w-full flex flex-row justify-between items-center mb-4">
-            <Text className="font-semibold text-dark text-lg">
-            Top Mentor
-            </Text>
-            <Link
-              href="/(root)/(tabs)/(mentors)/mentors"
-              className="flex flex-row gap-2 items-center "
-            >
-              <Text className="text-primary text-[12px] uppercase font-semibold">
-                SEE ALL
-              </Text>
-              <Feather
-                className=" self-center"
-                name="chevron-right"
-                size={16}
-                color="#0961F5"
-              />
-            </Link>
-          </View>
-          <View className="w-full flex flex-row justify-between">
-
-            {data.topMentors.map((mentor)=>(
-              <View key={mentor.name} className="flex flex-col gap-3 items-center">
-                {/* Image placeholder */}
-                <View className="w-[70px] h-[60px] rounded-[20px] bg-black"></View>
-                <Text className=" text-[13px] text-dark font-semibold">{mentor.name}</Text>
-              </View>
-            ))}
-          </View>
-
         </View>
       </ScrollView>
     </SafeAreaView>

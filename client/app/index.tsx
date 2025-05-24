@@ -1,9 +1,6 @@
 
 import { Redirect } from 'expo-router';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
-import storage from './(onboarding)/storage';
-import { loadUserFromStorage } from '@/redux/userSlice';
-import { useEffect, useState } from 'react';
+import {useAppSelector } from '@/redux/store';
 
 export default function HomeScreen() {
 

@@ -1,10 +1,17 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import storage from "@/app/(onboarding)/storage";
 
+
+interface User {
+    id:string;
+    firstName:string;
+    lastName:string;
+    email:string;
+}
 interface AuthState {
     isLoading: boolean ;
     token: string | null;
-    user: any
+    user: User | null
 }
 
 const initialState : AuthState = {
@@ -24,7 +31,6 @@ export const loadUserFromStorage= createAsyncThunk(
         return {token,user}
     }
 )
-
 
 const userSlice= createSlice({
   name:"user",
