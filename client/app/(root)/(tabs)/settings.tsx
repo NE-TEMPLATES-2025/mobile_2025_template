@@ -201,7 +201,7 @@ const Settings = () => {
             {/* Logout button */}
 
             
-            <TouchableOpacity className="px-6 py-3 flex  flex-row gap-2 border-[2px] border-black w-1/2 items-center justify-center rounded-lg">
+            <TouchableOpacity onPress={handleLogout} className="px-6 py-3 flex  flex-row gap-2 border-[2px] border-black w-1/2 items-center justify-center rounded-lg">
               <AntDesign name="exclamationcircleo" size={24} color="black" />
 
                 <Text className="text-xl font-medium ">Logout</Text>

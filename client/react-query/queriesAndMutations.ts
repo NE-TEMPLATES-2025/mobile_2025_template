@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { QUERY_KEYS } from "./queryKey"
-import { createParking, getAllParkings } from "@/app/api/parking"
+import { createParking, getAllParkings, searchParking } from "@/app/api/parking"
 import { getCarMovements, registerCarEntry, registerCarExit } from "@/app/api/car_movement";
 
 
@@ -28,6 +28,14 @@ export const useGetAllParkings= ()=>{
     return useQuery({
         queryKey: [QUERY_KEYS.GET_ALL_PARKINGS],
         queryFn: ()=> getAllParkings()
+    })
+}
+
+export const useGetSearchedParkings = (query:string)=>{
+    return useQuery({
+        queryKey:[QUERY_KEYS.GET_SEARCHED_PARKINGS],
+        queryFn :()=> searchParking(query),
+        enabled: query.trim().length > 0
     })
 }
 

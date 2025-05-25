@@ -43,8 +43,12 @@ export const createParking=async(
 export const searchParking= async(query:string)=>{
     try {
         
-        const response= await protectedApiClient.get<ParkingsResponse>(`/parking/search/${encodeURIComponent(query)}`)
+        const url=`/parking/search?q=${encodeURIComponent(query)}`
+          console.log("Search API Request URL:", url)
+        const response= await protectedApiClient.get<ParkingsResponse>(url)
 
+        console.log("Response from api",response);
+        
         return response.data.data;
 
 
