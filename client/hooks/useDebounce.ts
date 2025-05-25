@@ -13,7 +13,7 @@ export const useDebounce  = <T>(delay:number,value:T) :T=>{
 
         return ()=> clearTimeout(handler);
 
-    },[delay])
+    },[delay,value])
     return searchValue;
 
 

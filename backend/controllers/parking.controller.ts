@@ -48,7 +48,30 @@ const getAllParkings= async(req:Request,res:Response) =>{
     }
 }
 
+const searchParking= async(req:Request,res:Response)=>{
+    const query=req.params.query;
+    try {
+        const response= await parkingService.searchParking(query);
+        console.log(response);
+        
+        res.status(200).json(
+            ApiResponse.success(
+                "Searched parking retrieved successfully",
+                200,
+                response
+            )
+        )
+    } catch (error) {
+         res.status(500).json(
+            ApiResponse.error(
+                "Failed to get parkings",500
+            )
+        )
+    }
+}
+
 export const parkingsController= {
     createParking,
-    getAllParkings
+    getAllParkings,
+    searchParking
 }

@@ -9,20 +9,7 @@ export default function HomeScreen() {
 
   const {token,user,isLoading}= useAppSelector((state)=> state.user);
 
-  // const token= storage.getToken();
-  // console.log(token)
-
-  // useEffect(()=>{
-  //   const init =async()=>{
-
-  //     await dispatch(loadUserFromStorage());
-  //     setInitialized(true)
-  //   }
-  //   init()
-  // })
   
-  // if(!initialized) return null;
-
 
 
   if(isLoading) return null;

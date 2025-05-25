@@ -54,7 +54,31 @@ import prisma from "../prisma/prisma-client";
 
 }
 
+
+const searchParking= async(query:string)=>{
+    try {
+        const parkings= await prisma.parking.findMany({
+            where:{
+                OR:[
+                    {parkingName: {contains:query,mode:"insensitive"}},
+                  
+                ]
+            },
+            orderBy: {
+                availableSpaces: "desc"
+            },
+            skip:0,
+            take:5
+        })
+        return parkings;
+    } catch (error) {
+         console.log(error);
+        throw new Error;
+    }
+
+}
 export const parkingService={
     getParkings,
-    createParking
+    createParking,
+    searchParking
 }
