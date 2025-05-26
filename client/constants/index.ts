@@ -62,17 +62,17 @@ const categories =[
    
     {
         id: 3,
-        title:"3D Design"
+        title:"Kigali"
     },
 
     {
         id: 2,
-        title:"Arts & Humanities"
+        title:"Kayonza"
     },
 
     {
         id: 1,
-        title:"Graphic Design"
+        title:"Kamonyi"
     }
 ]
 

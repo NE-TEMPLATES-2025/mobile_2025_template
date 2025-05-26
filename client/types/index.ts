@@ -32,3 +32,88 @@ export  interface OTPInputProps {
     errorMessages: string[] | undefined;
     onChangeCode: (text: string, index: number) => void;
   }
+
+
+
+
+
+type RegisterResponse ={
+  message: string;
+  status: number;
+  data:{
+    id:string;
+    firstName:string;
+    lastName:string;
+    email:string;
+    password:string;
+    role:string;
+    createdAt:string;
+    updatedAt:string;
+  }
+}
+
+export type Parking=  {
+    code:string;
+    parkingName: string;
+    availableSpaces:number;
+    chargingFeePerHour: number;
+    
+}
+
+export type ParkingsResponse ={
+  
+  message: string;
+  status: number;
+  data:Parking[];
+}
+
+export type ParkingResponse= {
+     code:string;
+    parkingName: string;
+    availableSpaces:number;
+    chargingFeePerHour: number;
+    location:string;
+    userId:string
+    
+}
+
+export type CreateParkingResponse ={
+  message: string;
+  status: number
+  data: ParkingResponse;
+}
+
+
+export type CarMovement ={
+   plateNumber: string
+  parkingCode: string
+  entryDateTime:string
+  exitDateTime:string
+  chargedAmount: number
+}
+export type RegisterCarEntryResponse ={
+
+  message:string;
+  status:number;
+  data: CarMovement
+}
+
+export type RegisterCarExitResponse ={
+
+  message:string;
+  status:number;
+  data: CarMovement
+}
+
+export type CarMovementsResponse= {
+   message:string;
+  status:number;
+  data: CarMovement[]
+}
+
+
+
+
+
+
+

@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 
 import store, { useAppDispatch } from "@/redux/store";
 import { loadUserFromStorage } from "@/redux/userSlice";
+
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();

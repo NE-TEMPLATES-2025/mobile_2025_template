@@ -10,6 +10,7 @@ const SearchInput = ({
     iconRight,
     placeholder,
     secureTextEntry= false,
+    onChangeText
     
 }: CustomInputProps) => {
 
@@ -23,6 +24,7 @@ const SearchInput = ({
                 <View >{iconLeft}</View>
                 }
                 <TextInput  
+                onChangeText={onChangeText}
                 placeholder={placeholder}
                 className='bg-transparent focus:bg-transparent px-3 py-2 w-full h-full text-gray-2 font-semibold'
 

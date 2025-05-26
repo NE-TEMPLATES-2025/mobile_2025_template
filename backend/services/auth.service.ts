@@ -19,11 +19,17 @@ export const loginUser = async( loginDto:LoginDto)=>{
 
         if(!matches) throw new Error("Email or Password are invalid");
 
-        const token = createToken(user.id);
+        const payload={
+            id:user.id,
+            firstName:user.firstName,
+            lastName:user.lastName,
+            email:user.email
+        }
+        const token = createToken(payload);
 
         return {user,token}
 
-        
+
     } catch (error) {
      
         throw new Error(`Error: ${error}`)
@@ -51,7 +57,7 @@ export const signup =async(registerDto:RegisterDto)=>{
             data:{
                 ...registerDto,
                 password: hash,
-                role:"USER"
+                role:"ADMIN"
             }
         })
 

@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
 import nodemailer, { Transporter } from "nodemailer"
 
-export const createToken= (id: string)=>{
+export const createToken= (payload:any)=>{
 
-    return jwt.sign({id: id},process.env.JWT_SECRET_KEY as string, {expiresIn:"3d"})
+    return jwt.sign(payload,process.env.JWT_SECRET_KEY as string, {expiresIn:"3d"})
 }
 
 export const createTransporter = () : Transporter =>{
