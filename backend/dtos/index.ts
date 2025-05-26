@@ -4,3 +4,6 @@ export * from "./reset-password.dto"
 export * from "./initiate-account-verification.dto"
 export * from "./verify-account.dto"
 export * from "./initiate-reset-password.dto"
+export * from './create-parking.dto'
+export * from './registrer-car-entry.dto'
+export * from './register-car-exit.dto'
