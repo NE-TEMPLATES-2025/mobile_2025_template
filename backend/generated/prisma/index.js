@@ -130,7 +130,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/paccy/Desktop/codes/NE/2025_templates/mobile_2025_template/backend/generated/prisma",
+      "value": "C:\\Users\\abayi\\Documents\\NE\\mobile_2025_template\\backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -139,12 +139,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/paccy/Desktop/codes/NE/2025_templates/mobile_2025_template/backend/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\abayi\\Documents\\NE\\mobile_2025_template\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -162,12 +166,12 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://pacifique:myPassword123@localhost:5432/mobile_tpt_db?schema=public"
+        "value": "postgresql://postgres:myPassword123@localhost:5432/mobile_tpt_db?schema=public"
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  ADMIN\n  USER\n}\n\nmodel User {\n  id        String @id @default(uuid())\n  firstName String @map(\"first_name\")\n  lastName  String @map(\"last_name\")\n  email     String @unique @map(\"email\")\n  password  String @map(\"password\")\n\n  role Role @map(\"role\")\n\n  @@map(\"users\")\n}\n",
-  "inlineSchemaHash": "0c91f5e306450850377bde607886cee46f9810cece120480f1ba177f24717542",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"windows\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  ADMIN\n  USER\n}\n\nmodel User {\n  id        String @id @default(uuid())\n  firstName String @map(\"first_name\")\n  lastName  String @map(\"last_name\")\n  email     String @unique @map(\"email\")\n  password  String @map(\"password\")\n\n  role Role @map(\"role\")\n\n  @@map(\"users\")\n}\n",
+  "inlineSchemaHash": "7ee5f6b79bb3a514192a5789f645aad95ea49f7ff81e7989d664cfe31a2c4a81",
   "copyEngine": true
 }
 
@@ -206,8 +210,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
-path.join(process.cwd(), "generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "generated/prisma/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/prisma/schema.prisma")

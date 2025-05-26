@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const server= {
-    baseUrl: `http://10.12.72.202:5000/api/v1`
+    baseUrl: `http://192.168.1.200/api/v1`
 }
 
 export const apiClient= axios.create({

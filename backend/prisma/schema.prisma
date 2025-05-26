@@ -2,12 +2,14 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
+  binaryTargets = ["native","windows"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 
 enum Role {
   ADMIN
